@@ -353,6 +353,7 @@ function ChatRoom({ socket }) {
       conversationId,
     }) => {
       if (activeConversation === conversationId && senderTyping !== userId) {
+
         dispatch(
           setTypingStatus({
             conversationId,
@@ -369,7 +370,7 @@ function ChatRoom({ socket }) {
               isTyping: false,
             })
           );
-        }, 2000);
+        }, 5000);
       }
     };
 

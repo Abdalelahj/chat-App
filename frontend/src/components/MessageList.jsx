@@ -1,44 +1,44 @@
 import React, { useEffect, useMemo, useRef } from 'react';
 import Message from './Message';
 import { useSelector } from 'react-redux';
-
+import "../styles/messageList.css"
 const MessageList = ({ conversationId, typingIndicator, socket }) => {
-  
+
   const senderId = JSON.parse(localStorage.getItem("userId"));
   const selectedUserId = useSelector((state) => state.auth.selectedUser);
-  
-  const messages = useSelector((state) => 
+
+  const messages = useSelector((state) =>
     conversationId ? state.chat.messages[conversationId] || [] : []
   );
-  
+
   const scrollToLastRef = useRef(null);
-  
+
   // Sort messages by timestamp
   const sortedMessages = useMemo(() => {
     const uniqueMessages = messages
-    
+
     // Sort by timestamp
-    return [...uniqueMessages].sort((a, b) => 
+    return [...uniqueMessages].sort((a, b) =>
       new Date(a.timestamp) - new Date(b.timestamp)
     );
-     
+
   }, [messages]);
 
-  
+
 
   useEffect(() => {
     if (scrollToLastRef.current) {
-      scrollToLastRef.current.scrollIntoView({ behavior: 'smooth' });      
+      scrollToLastRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   }, [sortedMessages, typingIndicator]);
 
   useEffect(() => {
     if (!socket || !conversationId || conversationId === 'pending') return;
-    
+
     const unreadMessages = sortedMessages.filter(
       msg => msg.sender !== senderId && msg.status !== 'read'
     );
-    
+
     if (unreadMessages.length > 0) {
       unreadMessages.forEach(msg => {
         socket.emit('messageStatus', {
@@ -83,12 +83,15 @@ const MessageList = ({ conversationId, typingIndicator, socket }) => {
               />
             </div>
           ))}
-          
+
           {typingIndicator && (
-            <div className="typing-indicator" ref={scrollToLastRef}>
-              <span className="dot">.</span>
-              <span className="dot">.</span>
-              <span className="dot">.</span>
+            <div className="typing-indicator-bubble" ref={scrollToLastRef}>
+              <div className="typing-dots">
+                <div className="dot pulse"></div>
+                <div className="dot pulse"></div>
+                <div className="dot pulse"></div>
+              </div>
+              <span className="typing-text">typing</span>
             </div>
           )}
         </>
