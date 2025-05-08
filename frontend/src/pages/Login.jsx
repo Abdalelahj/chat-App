@@ -3,8 +3,8 @@ import { useLoginMutation } from '../Redux/Features/api/apiSlice';
 import { useDispatch } from 'react-redux';
 import { jwtDecode } from "jwt-decode";
 import { LoginInto } from '../Redux/Features/authSlice';
-import { useNavigate } from 'react-router-dom';
-
+import { useNavigate, Link } from 'react-router-dom';
+import "../styles/login.css"
 function Login() {
     const [loginInfo, setLoginInfo] = useState({
         username: "",
@@ -34,29 +34,37 @@ function Login() {
     };
 
     return (
-        <main>
-            <form onSubmit={handlesSubmit}>
-                <label htmlFor="username">Username</label>
-                <input
-                    type="text"
-                    name="username"
-                    onChange={(e) =>
-                        setLoginInfo({ ...loginInfo, username: e.target.value })
-                    }
-                />
-                <br />
-                <label htmlFor="password">Password</label>
-                <input
-                    type="password"
-                    name="password"
-                    onChange={(e) =>
-                        setLoginInfo({ ...loginInfo, password: e.target.value })
-                    }
-                />
-                <br /><br />
-                <input type="submit" value="Login" />
-            </form>
-        </main>
+        <main className="auth-container">
+        <div className="auth-card">
+          <form onSubmit={handlesSubmit}>
+            <label htmlFor="username">Username</label>
+            <input
+              type="text"
+              name="username"
+              onChange={(e) =>
+                setLoginInfo({ ...loginInfo, username: e.target.value })
+              }
+            />
+            <br />
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              name="password"
+              onChange={(e) =>
+                setLoginInfo({ ...loginInfo, password: e.target.value })
+              }
+            />
+            <br /><br />
+            <input type="submit" value="Login" />
+          </form>
+      
+          <div className="auth-footer">
+            <Link to="/register" className="auth-link">
+              Don't have an account? Register here
+            </Link>
+          </div>
+        </div>
+      </main>
     );
 }
 

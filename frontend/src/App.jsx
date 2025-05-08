@@ -11,6 +11,7 @@ import Protected from "./routes/Protected";
 import ChatRoom from "./pages/ChatRoom";
 import { io } from "socket.io-client";
 import { useEffect, useState } from "react";
+import Register from "./pages/Register";
 
 function App() {
   const token = JSON.parse(localStorage.getItem("token"));
@@ -52,17 +53,18 @@ function App() {
 
   return (
     <Routes>
-    <Route path="/" element={<Navigate to="/login" replace />} />
-    <Route path="/login" element={<Login />} />
-    <Route
-      path="/chat"
-      element={
-        <Protected>
-          <ChatRoom socket={socket} />
-        </Protected>
-      }
-    />
-  </Routes>
+      <Route path="/" element={<Navigate to="/login" replace />} />
+      <Route path="/login" element={<Login />} />
+      <Route
+        path="/chat"
+        element={
+          <Protected>
+            <ChatRoom socket={socket} />
+          </Protected>
+        }
+      />
+      <Route path="/register" element={<Register />} />
+    </Routes>
   );
 }
 

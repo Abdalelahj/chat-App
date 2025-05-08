@@ -1,4 +1,4 @@
-const {messageHandler} = require("../controllers/message");
+const socketHandler = require("../controllers/socket-handlers");
 const { updateUserStatus, handleDisconnect } = require("./presenceHandler");
 const verify = require("../middlewares/verifyToken");
 
@@ -22,7 +22,7 @@ module.exports = (io) => {
       socket.join(`user-${user.userId}`);
 
       // Initialize other handlers
-      messageHandler(socket, clients);
+      socketHandler(socket, clients);
 
       // Cleanup on disconnect
       socket.on("disconnect", () => {

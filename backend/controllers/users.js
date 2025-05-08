@@ -4,14 +4,17 @@ const jwt = require('jsonwebtoken');
 
 const register = async (req, res, next) => {
     const { username, password } = req.body
+    console.log(username, password);
 
     try {
         const new_User = new userModel({
             username, password
         })
         await new_User.save()
-        res.status(201).json("user created successfully")
+        res.status(201).json({success:true,message:"user created successfully"})
     } catch (error) {
+        console.log(error);
+        
         next(error)
     }
 }
@@ -34,7 +37,7 @@ const login = async (req, res, next) => {
                 }
                 const payload = {
                     userId: foundUser._id,
-                    username:foundUser.username
+                    username: foundUser.username
                 }
                 const token = jwt.sign(payload, process.env.SECRET, opt)
                 res.status(200).json({
@@ -56,7 +59,7 @@ const login = async (req, res, next) => {
 
 const getUsers = async (req, res, next) => {
     try {
-        const users =await userModel.find({})
+        const users = await userModel.find({})
         res.status(200).json(users)
     } catch (error) {
         next(error)
