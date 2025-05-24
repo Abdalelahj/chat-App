@@ -81,19 +81,19 @@ const Message = ({ message, isOwn }) => {
     }
   };
 
-  const renderReactions = () => {
-    if (!message.reactions || message.reactions.length === 0) return null;
+  // const renderReactions = () => {
+  //   if (!message.reactions || message.reactions.length === 0) return null;
 
-    return (
-      <div className="message-reactions">
-        {message.reactions.map((reaction, idx) => (
-          <span key={idx} className="reaction">
-            {reaction.emoji}
-          </span>
-        ))}
-      </div>
-    );
-  };
+  //   return (
+  //     <div className="message-reactions">
+  //       {message.reactions.map((reaction, idx) => (
+  //         <span key={idx} className="reaction">
+  //           {reaction.emoji}
+  //         </span>
+  //       ))}
+  //     </div>
+  //   );
+  // };
 
   return (
     <div
@@ -122,7 +122,7 @@ const Message = ({ message, isOwn }) => {
           }}
         >
           <p style={{ margin: 0 }}>{getMessageContent()}</p>
-          {renderReactions()}
+          {/* {renderReactions()} */}
           
         </div>
         <div
